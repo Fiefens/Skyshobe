@@ -13,9 +13,8 @@ workflows:
         script: |
           brew install mono-mdk
       - name: Restore NuGet packages
-  script: |
-    dotnet restore $XAMARIN_SOLUTION
-
+        script: |
+          dotnet restore $XAMARIN_SOLUTION
       - name: Build iOS app
         script: |
           msbuild $XAMARIN_IOS_PROJECT /p:Configuration=Debug /p:Platform=iPhoneSimulator
