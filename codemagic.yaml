@@ -9,6 +9,10 @@ workflows:
         XAMARIN_SOLUTION: "Skyshobe.sln"
       xcode: latest
     scripts:
+      - name: Install .NET SDK
+        script: |
+          brew install --cask dotnet-sdk
+          export PATH="/usr/local/share/dotnet:$PATH"
       - name: Install Mono
         script: |
           brew install mono-mdk
