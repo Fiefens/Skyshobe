@@ -13,14 +13,11 @@ workflows:
         script: |
           brew install --cask dotnet-sdk
           export PATH="/usr/local/share/dotnet:$PATH"
-      - name: Install Mono
-        script: |
-          brew install mono-mdk
       - name: Restore NuGet packages
         script: |
           dotnet restore $XAMARIN_SOLUTION
       - name: Build iOS app
         script: |
-          msbuild $XAMARIN_IOS_PROJECT /p:Configuration=Debug /p:Platform=iPhoneSimulator
+          dotnet build $XAMARIN_IOS_PROJECT -c Debug -p:Platform=iPhoneSimulator
     artifacts:
       - build/**/iPhoneSimulator/Debug/*.app
