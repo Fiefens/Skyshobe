@@ -1,0 +1,32 @@
+name: Build Xamarin.iOS App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    runs-on: macos-13
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Install Mono
+        run: brew install mono-mdk
+
+      - name: Restore NuGet packages
+        run: nuget restore Skyshobe/Skyshobe.csproj
+
+      - name: Build Xamarin.iOS project
+        run: msbuild Skyshobe/Skyshobe.csproj /p:Configuration=Debug /p:Platform=iPhoneSimulator
+
+      - name: Upload .app bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: BuiltAppBundle
+          path: '**/bin/iPhoneSimulator/Debug/*.app'
